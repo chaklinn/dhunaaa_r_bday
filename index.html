@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wifey's Birthday!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #121212;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            transition: background-color 0.5s, color 0.5s;
+        }
+        .container {
+            text-align: center;
+        }
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            background-color: #d5006d;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        .btn:hover {
+            transform: scale(1.1);
+        }
+        .hidden {
+            display: none;
+        }
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 2s forwards;
+        }
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+        .balloon {
+            position: absolute;
+            bottom: -100px;
+            width: 50px;
+            height: 70px;
+            border-radius: 50%;
+            animation: fly-up 6s ease-in-out infinite;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .balloon:nth-child(1) {
+            left: 20%;
+            background-color: #FF4500;
+            animation-delay: 0s;
+        }
+        .balloon:nth-child(2) {
+            left: 40%;
+            background-color: #1E90FF;
+            animation-delay: 1s;
+        }
+        .balloon:nth-child(3) {
+            left: 60%;
+            background-color: #FFD700;
+            animation-delay: 2s;
+        }
+        .balloon:nth-child(4) {
+            left: 80%;
+            background-color: #32CD32;
+            animation-delay: 3s;
+        }
+        @keyframes fly-up {
+            0% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-300px) scale(1.1);
+            }
+            100% {
+                transform: translateY(-600px) scale(1);
+            }
+        }
+        .candle {
+            display: inline-block;
+            width: 30px;
+            height: 70px;
+            background-color: brown;
+            margin: 0 10px;
+            position: relative;
+        }
+        .flame {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background-color: orange;
+            border-radius: 50%;
+            animation: flicker 0.5s infinite;
+        }
+        @keyframes flicker {
+            0%, 100% {
+                transform: translateX(-50%) scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: translateX(-50%) scale(1.2);
+                opacity: 0.8;
+            }
+        }
+        .countdown {
+            font-size: 48px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .special-img {
+            margin-top: 10px;
+            margin-bottom: 20px;
+            width: 150px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="step-1">
+        <h1>Yourrr Bdayyy Dhunaaa!</h1>
+        <button class="btn" onclick="nextStep(1)">Next</button>
+    </div>
+
+    <div class="container hidden" id="step-2">
+        <h1>Turn the Lights On</h1>
+        <button class="btn" onclick="turnOnLights()">Turn On</button>
+    </div>
+
+    <div class="container hidden" id="step-3">
+        <h1>Play Music</h1>
+        <button class="btn" onclick="playMusic()">Play</button>
+        <audio id="birthday-music" src="happy-birthday.mp3"></audio>
+    </div>
+
+    <div class="container hidden" id="step-4">
+        <h1>Flying the Balloons for you babyy</h1>
+        <div class="balloon"></div>
+        <div class="balloon"></div>
+        <div class="balloon"></div>
+        <div class="balloon"></div>
+        <button class="btn" onclick="nextStep(4)">Next</button>
+    </div>
+
+    <div class="container hidden" id="step-5">
+        <h1>Blow the Candles</h1>
+        <div>
+            <div class="candle">
+                <div class="flame"></div>
+            </div>
+            <div class="candle">
+                <div class="flame"></div>
+            </div>
+            <div class="candle">
+                <div class="flame"></div>
+            </div>
+        </div>
+        <button class="btn" onclick="blowCandles()">Blow Out Candles</button>
+    </div>
+
+    <div class="container hidden" id="step-6">
+        <h1>Cut the Cake</h1>
+        <img src="cat1.gif" alt="cat1" style="width: 85px; height: auto; margin-bottom: 20px;">
+        <img src="cake.png" alt="Cake" style="width: 150px; height: auto;">
+        <img src="cat2.gif" alt="cat2" style="width: 75px; height: auto; margin-top: 20px;">
+        <button class="btn" onclick="nextStep(6)">Next</button>
+    </div>
+
+    <div class="container hidden" id="step-7">
+        <h1>Dear Dhuna, Happy Birthday! ❤️</h1>
+        <p>Wishing you the happiest birthday my love,you're my everything forever🎉🎂.<br>My wifey, I'll always be there for you.
+<br>i love you infiniteeeeee.</p>
+        <div><img src="her.jpeg" alt="cake" style="width: 300px; height: auto;"></div>
+        <button class="btn" onclick="nextStep(7)">Next</button>
+    </div>
+
+    <div class="container hidden" id="step-8">
+        <h1>Special Gift Awaits 🎁</h1>
+        <img class="special-img" src="tz.jpeg" alt="Special Gift">
+        <div class="countdown" id="countdown">3</div>
+        <button class="btn hidden" id="new-song-btn" onclick="playNewSong()">Special Gift</button>
+        <audio id="new-song" src="special-song.opus"></audio>
+        <div id="special-gif-container" class="hidden fade-in">
+            <img src="cat.gif" alt="Special GIF" style="width: 300px; height: auto; margin-top: 20px;">
+        </div>
+    </div>
+
+    <script>
+    function nextStep(step) {
+        document.getElementById(`step-${step}`).classList.add('hidden');
+        const nextElement = document.getElementById(`step-${step + 1}`);
+        if (nextElement) {
+            nextElement.classList.remove('hidden');
+        }
+        if (step === 7) {
+            startCountdown();
+        }
+    }
+
+    function turnOnLights() {
+        document.body.style.backgroundColor = 'pink';
+        document.body.style.color = 'black';
+        const nextBtn = document.querySelectorAll('.btn');
+        nextBtn.forEach(button => button.classList.add('btn-dark'));
+        nextStep(2);
+    }
+
+    function playMusic() {
+        const music = document.getElementById('birthday-music');
+        if (music) {
+            music.play();
+        }
+        nextStep(3);
+    }
+
+    function blowCandles() {
+        const flames = document.querySelectorAll('.flame');
+        flames.forEach(flame => flame.style.display = 'none');
+        nextStep(5);
+    }
+
+    function startCountdown() {
+        const countdownElement = document.getElementById('countdown');
+        const newSongBtn = document.getElementById('new-song-btn');
+        let countdown = 3;
+        const interval = setInterval(() => {
+            countdown--;
+            countdownElement.textContent = countdown;
+            if (countdown <= 0) {
+                clearInterval(interval);
+                newSongBtn.classList.remove('hidden');
+            }
+        }, 1000);
+    }
+
+    function playNewSong() {
+        const oldMusic = document.getElementById
+('birthday-music');
+        const newSong = document.getElementById('new-song');
+        const gifContainer = document.getElementById('special-gif-container');
+
+        if (oldMusic) oldMusic.pause();
+        if (newSong) newSong.play();
+
+        if (gifContainer) {
+            gifContainer.classList.remove('hidden');
+            gifContainer.classList.add('fade-in');
+        }
+    }
+    </script>
+</body>
+</html>
+
