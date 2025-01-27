@@ -131,6 +131,22 @@
             width: 150px;
             height: auto;
         }
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: #fff;
+            opacity: 0.7;
+            animation: confetti-fall 3s linear infinite;
+        }
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
     </style>
 </head>
 <body>
@@ -140,26 +156,32 @@
     </div>
 
     <div class="container hidden" id="step-2">
+        <h1>Do you want to see what I've made for you?</h1>
+        <button class="btn" onclick="nextStep(2)">Yes</button>
+        <button class="btn" onclick="alert('Take your time! Click Next when ready.')">No</button>
+    </div>
+
+    <div class="container hidden" id="step-3">
         <h1>Turn the Lights On</h1>
         <button class="btn" onclick="turnOnLights()">Turn On</button>
     </div>
 
-    <div class="container hidden" id="step-3">
+    <div class="container hidden" id="step-4">
         <h1>Play Music</h1>
-        <button class="btn" onclick="playMusic()">Play</button>
         <audio id="birthday-music" src="happy-birthday.mp3"></audio>
+        <button class="btn" onclick="playMusic()">Play</button>
     </div>
 
-    <div class="container hidden" id="step-4">
+    <div class="container hidden" id="step-5">
         <h1>Flying the Balloons for you babyy</h1>
         <div class="balloon"></div>
         <div class="balloon"></div>
         <div class="balloon"></div>
         <div class="balloon"></div>
-        <button class="btn" onclick="nextStep(4)">Next</button>
+        <button class="btn" onclick="nextStep(5)">Next</button>
     </div>
 
-    <div class="container hidden" id="step-5">
+    <div class="container hidden" id="step-6">
         <h1>Blow the Candles</h1>
         <div>
             <div class="candle">
@@ -175,28 +197,29 @@
         <button class="btn" onclick="blowCandles()">Blow Out Candles</button>
     </div>
 
-    <div class="container hidden" id="step-6">
+    <div class="container hidden" id="step-7">
         <h1>Cut the Cake</h1>
+        <div id="confetti-container"></div>
         <img src="cat1.gif" alt="cat1" style="width: 85px; height: auto; margin-bottom: 20px;">
         <img src="cake.png" alt="Cake" style="width: 150px; height: auto;">
         <img src="cat2.gif" alt="cat2" style="width: 75px; height: auto; margin-top: 20px;">
-        <button class="btn" onclick="nextStep(6)">Next</button>
-    </div>
-
-    <div class="container hidden" id="step-7">
-        <h1>Dear Dhuna, Happy Birthday! ❤️</h1>
-        <p>Wishing you the happiest birthday my love,you're my everything forever🎉🎂.<br>My wifey, I'll always be there for you.
-<br>i love you infiniteeeeee.</p>
-        <div><img src="her.jpeg" alt="cake" style="width: 300px; height: auto;"></div>
         <button class="btn" onclick="nextStep(7)">Next</button>
     </div>
 
     <div class="container hidden" id="step-8">
+        <h1>Dear Dhuna, Happy Birthday! ❤️</h1>
+        <p>Wishing you the happiest birthday my love, you're my everything forever 🎉🎂.<br>My wifey, I'll always be there for you.
+            <br>i love you infiniteeeeee.</p>
+        <div><img src="her.jpeg" alt="cake" style="width: 300px; height: auto;"></div>
+        <button class="btn" onclick="nextStep(8)">Next</button>
+    </div>
+
+    <div class="container hidden" id="step-9">
         <h1>Special Gift Awaits 🎁</h1>
         <img class="special-img" src="tz.jpeg" alt="Special Gift">
         <div class="countdown" id="countdown">3</div>
         <button class="btn hidden" id="new-song-btn" onclick="playNewSong()">Special Gift</button>
-        <audio id="new-song" src="special-song.mp3"></audio>
+        <audio id="new-song" src="special-song.opus"></audio>
         <div id="special-gif-container" class="hidden fade-in">
             <img src="cat.gif" alt="Special GIF" style="width: 300px; height: auto; margin-top: 20px;">
         </div>
@@ -210,30 +233,41 @@
             nextElement.classList.remove('hidden');
         }
         if (step === 7) {
+            addConfetti();
+        }
+        if (step === 8) {
             startCountdown();
         }
     }
 
     function turnOnLights() {
-        document.body.style.backgroundColor = 'pink';
-        document.body.style.color = 'black';
-        const nextBtn = document.querySelectorAll('.btn');
-        nextBtn.forEach(button => button.classList.add('btn-dark'));
-        nextStep(2);
+        document.body.style.backgroundColor = '#ffebcd';
+        document.body.style.color = '#000';
+        nextStep(3);
     }
 
     function playMusic() {
         const music = document.getElementById('birthday-music');
-        if (music) {
-            music.play();
-        }
-        nextStep(3);
+        music.play();
+        nextStep(4);
     }
 
     function blowCandles() {
         const flames = document.querySelectorAll('.flame');
         flames.forEach(flame => flame.style.display = 'none');
-        nextStep(5);
+        nextStep(6);
+    }
+
+    function addConfetti() {
+        const confettiContainer = document.getElementById('confetti-container');
+        for (let i = 0; i < 100; i++) {
+            const confetti = document.createElement('div');
+            confetti.classList.add('confetti');
+            confetti.style.left = Math.random() * window.innerWidth + 'px';
+            confetti.style.animationDelay = Math.random() * 3 + 's';
+            confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+            confettiContainer.appendChild(confetti);
+        }
     }
 
     function startCountdown() {
@@ -251,8 +285,7 @@
     }
 
     function playNewSong() {
-        const oldMusic = document.getElementById
-('birthday-music');
+        const oldMusic = document.getElementById('birthday-music');
         const newSong = document.getElementById('new-song');
         const gifContainer = document.getElementById('special-gif-container');
 
@@ -267,4 +300,3 @@
     </script>
 </body>
 </html>
-
